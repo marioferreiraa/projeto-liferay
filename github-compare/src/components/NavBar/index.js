@@ -1,7 +1,7 @@
 import ClayNav from '@clayui/nav';
 import ClayInput from '@clayui/form/lib/Input';
-import ClayButton, { ClayButtonWithIcon } from '@clayui/button';
-import ClayIcon, { ClayIconSpriteContext } from '@clayui/icon';
+import { ClayButtonWithIcon } from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 
 import "@clayui/css/lib/css/atlas.css";
 import './style.css';
