@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import logo from '../../images/logo_github.svg';
 import spritemap from '../../images/icons.svg';
 import FiltersAndOrder from '../Dropdown/FiltersAndOrder';
+import DropdownAdd from '../DropdownAdd';
 
 
 const NavBar = () => { 
@@ -49,7 +50,7 @@ const NavBar = () => {
                             <ClayButtonWithIcon className="border-0" displayType="secondary" spritemap={spritemap} symbol="cards2" />
                     </li>
                     <li className="nav-item">
-                            <ClayButtonWithIcon className="" spritemap={spritemap} symbol="plus" />
+                            <DropdownAdd/>
                     </li>
                 </ul>
             </ClayNav>

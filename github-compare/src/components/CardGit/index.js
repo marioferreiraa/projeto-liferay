@@ -67,9 +67,9 @@ const CardGit = (props) => {
                 <ul>
                     <StyledBodyList><StyledTitleItem>Stars</StyledTitleItem> {props.stars}</StyledBodyList>
                     <StyledBodyList><StyledTitleItem>Forks</StyledTitleItem> {props.forks}</StyledBodyList>
-                    <StyledBodyList><StyledTitleItem>Open</StyledTitleItem> Issues {props.openIssues}</StyledBodyList>
+                    <StyledBodyList><StyledTitleItem>Open Issues</StyledTitleItem> {props.openIssues}</StyledBodyList>
                     <StyledBodyList><StyledTitleItem>Age</StyledTitleItem> {props.age}</StyledBodyList>
-                    <StyledBodyList><StyledTitleItem>Last</StyledTitleItem> Commit {props.lastCommit}</StyledBodyList>
+                    <StyledBodyList><StyledTitleItem>Last Commit</StyledTitleItem> {props.lastCommit}</StyledBodyList>
                     <StyledBodyList><StyledTitleItem>License</StyledTitleItem> {props.license || 'N/A' }</StyledBodyList>
                     <StyledLanguage>{props.language}</StyledLanguage>
                 </ul>

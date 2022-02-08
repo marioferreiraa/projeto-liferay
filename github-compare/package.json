@@ -9,6 +9,7 @@
     "@clayui/drop-down": "^3.45.0",
     "@clayui/form": "^3.45.0",
     "@clayui/icon": "^3.40.0",
+    "@clayui/modal": "^3.45.0",
     "@clayui/nav": "^3.45.0",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
