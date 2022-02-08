@@ -2,8 +2,11 @@ import './App.css';
 import CardGit from './components/CardGit';
 import NavBar from './components/NavBar';
 import Mock from './MockTemporario';
+import { useState } from 'react';
 import React  from 'react';
 import ModalDelete from './components/ModalDelete';
+import EmptyPage from './components/DefaultPage';
+import ListGit from './components/ListGit';
 
 let { stargazers_count: stars,
 	forks_count: forks,
@@ -42,49 +45,61 @@ const getTimeByUpdatedAt = (updatedAt) => {
 } 
 
 const App = () => {
+
+	const [repositories, setRepositories] = useState([]);
+
 	return (
 		<div className="App">
 			<NavBar />
-			<div className="container mt-5">
-				<div className="row">
-					<div className="col-md-4">
-						<CardGit language={language}
-							logo={logo}
-							name={name}
-							age={getYearsByCreatedAt(createdDate)}
-							openIssues={openIssues}
-							forks={forks}
-							stars={stars}
-							license={license.url}
-							lastCommit={getTimeByUpdatedAt(updatedDate)}
-							></CardGit>
-					</div>
-					<div className="col-md-4">
-						<CardGit language={language}
-							logo={logo}
-							name={name}
-							age={getYearsByCreatedAt(createdDate)}
-							openIssues={openIssues}
-							forks={forks}
-							stars={stars}
-							license={license.url}
-							lastCommit={getTimeByUpdatedAt(updatedDate)}
-							></CardGit>
-					</div>
-					<div className="col-md-4">
-						<CardGit language={language}
-							logo={logo}
-							name={name}
-							age={getYearsByCreatedAt(createdDate)}
-							openIssues={openIssues}
-							forks={forks}
-							stars={stars}
-							license={license.url}
-							lastCommit={getTimeByUpdatedAt(updatedDate)}
-							></CardGit>
+			{!!repositories.length ? 
+				<div className="container mt-5">
+					<div className="row">
+						<div className="col-md-4">
+							<CardGit language={language}
+								logo={logo}
+								name={name}
+								age={getYearsByCreatedAt(createdDate)}
+								openIssues={openIssues}
+								forks={forks}
+								stars={stars}
+								license={license.url}
+								lastCommit={getTimeByUpdatedAt(updatedDate)}
+								></CardGit>
+						</div>
+						<div className="col-md-4">
+							<CardGit language={language}
+								logo={logo}
+								name={name}
+								age={getYearsByCreatedAt(createdDate)}
+								openIssues={openIssues}
+								forks={forks}
+								stars={stars}
+								license={license.url}
+								lastCommit={getTimeByUpdatedAt(updatedDate)}
+								></CardGit>
+						</div>
+						<div className="col-md-4">
+							<CardGit language={language}
+								logo={logo}
+								name={name}
+								age={getYearsByCreatedAt(createdDate)}
+								openIssues={openIssues}
+								forks={forks}
+								stars={stars}
+								license={license.url}
+								lastCommit={getTimeByUpdatedAt(updatedDate)}
+								></CardGit>
+						</div>
 					</div>
 				</div>
-			</div>
+			: 
+				<EmptyPage
+					Title={"There is still nothing here"}
+					Description={"Add some repositories by clicking add new repository"}
+					buttonName={false}
+					callbackButton={() => alert("teste")}
+				></EmptyPage>	
+			}
 			<ModalDelete></ModalDelete>
 		</div>
 	);
