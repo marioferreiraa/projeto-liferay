@@ -2,7 +2,7 @@ import ClayDropDown from '@clayui/drop-down'
 import { useState } from 'react';
 import ClayButtonWithIcon from '@clayui/button';
 import ClayButton from '@clayui/button';
-import spritemap from '../../images/icons.svg';
+import spritemap from '../../../images/icons.svg';
 import ClayInput from '@clayui/form/lib/Input';
 import ClayForm from '@clayui/form';
 import './style.css';
@@ -16,13 +16,16 @@ const DropdownAdd = () => {
         <ClayDropDown
             trigger={
                 <button className="btn btn-dropdown-add btn-primary" spritemap={spritemap} symbol="plus" >
-                    <svg className="lexicon-icon lexicon-icon-plus" role="presentation"><use xlinkHref="/static/media/icons.7496aa165646086102814520cf46fcb4.svg#plus"></use></svg>
+                    <svg className="lexicon-icon lexicon-icon-plus" role="presentation">
+                        <use xlinkHref="/static/media/icons.7496aa165646086102814520cf46fcb4.svg#plus"></use>
+                    </svg>
                 </button>
             }
             active={active}
             onActiveChange={setActive}
             menuElementAttrs={{
                 className: 'my-custom-dropdown-menu',
+                id: 'dropdownAdd',
                 containerProps: {
                     className: 'dropdown-menu-react-portal-div',
                     id: 'dropdownMenuReactPortalDiv',

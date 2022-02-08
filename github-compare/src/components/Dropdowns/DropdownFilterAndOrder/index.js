@@ -2,7 +2,7 @@ import ClayDropDown from '@clayui/drop-down'
 import { useState } from 'react';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import spritemap from '../../images/icons.svg';
+import spritemap from '../../../images/icons.svg';
 
 import './style.css'
 

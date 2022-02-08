@@ -10,8 +10,9 @@ import { useEffect } from 'react';
 
 import logo from '../../images/logo_github.svg';
 import spritemap from '../../images/icons.svg';
-import FiltersAndOrder from '../Dropdown/FiltersAndOrder';
-import DropdownAdd from '../DropdownAdd';
+import FiltersAndOrder from '../Dropdowns/DropdownFilterAndOrder';
+import DropdownAdd from '../Dropdowns/DropdownAdd';
+import DropdownToggleLayout from '../Dropdowns/DropdownToggleLayout';
 
 
 const NavBar = () => { 
@@ -44,13 +45,13 @@ const NavBar = () => {
                         <ClayButtonWithIcon className="border-0" displayType="secondary" spritemap={spritemap} symbol="star-o" />
                     </li>
                     <li className="nav-item">
-                            <ClayButtonWithIcon className="border-0" displayType="secondary" spritemap={spritemap} symbol="adjust" />
+                        <ClayButtonWithIcon className="border-0" displayType="secondary" spritemap={spritemap} symbol="adjust" />
                     </li>
                     <li className="nav-item">
-                            <ClayButtonWithIcon className="border-0" displayType="secondary" spritemap={spritemap} symbol="cards2" />
+                        <DropdownToggleLayout></DropdownToggleLayout>
                     </li>
                     <li className="nav-item">
-                            <DropdownAdd/>
+                        <DropdownAdd/>
                     </li>
                 </ul>
             </ClayNav>
