@@ -3,6 +3,7 @@ import CardGit from './components/CardGit';
 import NavBar from './components/NavBar';
 import Mock from './MockTemporario';
 import React  from 'react';
+import ModalDelete from './components/ModalDelete';
 
 let { stargazers_count: stars,
 	forks_count: forks,
@@ -84,6 +85,7 @@ const App = () => {
 					</div>
 				</div>
 			</div>
+			<ModalDelete></ModalDelete>
 		</div>
 	);
 }
