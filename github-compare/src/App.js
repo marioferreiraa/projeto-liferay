@@ -43,6 +43,7 @@ const App = () => {
 	const [githubNameList, setGithubNameList] = useState([]);
 	const [tagOrder, setTagOrder] = useState("");
 	const [filterWithSearch, setFilterWithSearch] = useState("");
+	const [listLayout, setListLayout] = useState(false);
 
 	const addCardInDashboard = () => {
 		
@@ -55,11 +56,9 @@ const App = () => {
 
 		Service.addRepositoryByName(repositoryName)
 		.then((response) => {
-			console.log("then")
-            console.log(response)
+
 			setOnRequestError(false);
 			setOnRequestWarning(false);
-
 			setGithubNameList([...githubNameList, response.data.full_name]);
 
 			let githubCard = { 
@@ -78,8 +77,6 @@ const App = () => {
 
 			setRepositories([...repositories, githubCard]);
 			setRepositoriesAux([...repositoriesAux, githubCard]);
-			console.log("repositories");
-			console.log(repositories);
 			document.getElementById("inputAdd").value = "";
 
         })
@@ -92,27 +89,20 @@ const App = () => {
 	}
 
 	const deleteCardFromDashboard = (name) => {
-		console.log(`Deletar - ${name}`)
 		setGithubNameList(githubNameList.filter(item => item !== name));
 		setRepositories(repositories.filter(item => item.name !== name));
 	}
 
 	const orderArray = (tag) => {
-		console.log(`tentando ordenar por ${tag}`);
-		console.log("Old ====================")
-		console.log(repositories)
 		var newArray = repositories.sort((a,b) => {
 			//return (a[`${tag}`] > b[`${tag}`]) ? 1 : ((b[`${tag}`] > a[`${tag}`]) ? -1 : 0)
 			return b[`${tag}`] - a[`${tag}`]
 		});
 		
-		console.log("New ====================")
-		console.log(newArray)
 		setRepositories(newArray);
 	}
 
 	useEffect(()=>{
-		console.log(tagOrder);
 		(tagOrder!="" ? orderArray(tagOrder) : console.log("tentou atualizar nada"))
 	},[tagOrder])
 
@@ -132,25 +122,51 @@ const App = () => {
 				setOnRequestError={setOnRequestError}
 				setOnRequestWarning={setOnRequestWarning}
 				orderArray={setTagOrder}
-				setFilterWithSearch={setFilterWithSearch}/>
+				setFilterWithSearch={setFilterWithSearch}
+				setListLayout={setListLayout}/>
 			{!!repositories.length ? 
 				<div className="container mt-5">
 					<div className="row">
-						{!!repositories.length && repositories.map((item) => (
-							<div className="col-md-4" key={item.id}>
-								<CardGit language={item.language}
-									logo={item.logo}
-									name={item.name}
-									age={item.age}
-									openIssues={item.openIssues}
-									forks={item.forks}
-									stars={item.stars}
-									license={item.license.url}
-									lastCommit={item.lastCommit}
-									deleteCardFromDashboard={deleteCardFromDashboard}
-									></CardGit>
-							</div>
-						))}
+						{!!repositories.length && repositories.map((item) =>
+							<>
+								{ !listLayout ? 
+									(
+										<div className="col-md-4 item-content" key={item.id+"grid"}>
+											<CardGit language={item.language}
+												logo={item.logo}
+												name={item.name}
+												age={item.age}
+												openIssues={item.openIssues}
+												forks={item.forks}
+												stars={item.stars}
+												license={item.license.url}
+												lastCommit={item.lastCommit}
+												deleteCardFromDashboard={deleteCardFromDashboard}
+												></CardGit>
+										</div>
+									)
+									:
+									(
+										<div className="col-md-12 item-content" key={item.id+"list"}>
+											<ListGit language={item.language}
+												logo={item.logo}
+												name={item.name}
+												age={item.age}
+												openIssues={item.openIssues}
+												forks={item.forks}
+												stars={item.stars}
+												license={item.license.url}
+												lastCommit={item.lastCommit}
+												deleteCardFromDashboard={deleteCardFromDashboard}
+												></ListGit>
+										</div>
+									)	
+								}
+							</>
+							
+						
+						)
+						}
 					</div>
 				</div>
 			: 

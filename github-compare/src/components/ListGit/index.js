@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import spritemap from '../../images/icons.svg';
 import ClayIcon from '@clayui/icon';
 import ModalDelete from '../ModalDelete';
+import { useState } from 'react';
 
 const StyledLogo = styled.img`
     width: 40px;
@@ -51,6 +52,9 @@ const StyledShaddowList = styled.div`
 `;
 
 const ListGit = (props) => {
+    
+    const [favorite, setFavorite] = useState(false);
+
     return (
             <StyledShaddowList className="row p-3">
                 <div className="col-md-1">
@@ -75,8 +79,8 @@ const ListGit = (props) => {
                     </div>
                 </div>
                 <div className="col-md-1">
-                    <StyledHeadButton>
-                        <ClayIcon className="search-icon" spritemap={spritemap} symbol="star-o" />
+                    <StyledHeadButton className="favorite-button" onClick={() => setFavorite(!favorite)}>
+                        <ClayIcon className="search-icon" spritemap={spritemap} symbol={!favorite ? "star-o" : "star"} />
                     </StyledHeadButton>
                     <ModalDelete deleteCardFromDashboard={props.deleteCardFromDashboard} deleteCardName={props.name}></ModalDelete>
                 </div>

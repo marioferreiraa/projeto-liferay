@@ -28,12 +28,12 @@ const NavBar = (props) => {
     const handleFilterFavorite = () => {
         setFilterFavoriteRepositories(!filterFavoriteRepositories);
         if (!filterFavoriteRepositories) {
-            document.querySelectorAll('.card-header .lexicon-icon-star-o').forEach((item)=>{
-                console.log(item.closest('.col-md-4').classList.add("hide"))
+            document.querySelectorAll('.favorite-button .lexicon-icon-star-o').forEach((item)=>{
+                console.log(item.closest('.item-content').classList.add("hide"))
             })
         }else{
-            document.querySelectorAll('.card-header .lexicon-icon-star-o').forEach((item)=>{
-                console.log(item.closest('.col-md-4').classList.remove("hide"))
+            document.querySelectorAll('.favorite-button .lexicon-icon-star-o').forEach((item)=>{
+                console.log(item.closest('.item-content').classList.remove("hide"))
             })
         }
     }
@@ -69,7 +69,7 @@ const NavBar = (props) => {
                         <ClayButtonWithIcon className="border-0" displayType="secondary" spritemap={spritemap} symbol="adjust" />
                     </li>
                     <li className="nav-item">
-                        <DropdownToggleLayout></DropdownToggleLayout>
+                        <DropdownToggleLayout setListLayout={props.setListLayout}></DropdownToggleLayout>
                     </li>
                     <li className="nav-item">
                         <DropdownAdd onRequestError={props.onRequestError}

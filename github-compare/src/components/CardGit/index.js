@@ -59,7 +59,7 @@ const CardGit = (props) => {
                     <span>{props.name}</span>
                 </div>
                 <div className="d-flex">
-                    <StyledHeadButton onClick={() => setFavorite(!favorite)}>
+                    <StyledHeadButton className="favorite-button" onClick={() => setFavorite(!favorite)}>
                         <ClayIcon className="search-icon" spritemap={spritemap} symbol={!favorite ? "star-o" : "star"} />
                     </StyledHeadButton>
                     <ModalDelete deleteCardFromDashboard={props.deleteCardFromDashboard} deleteCardName={props.name}></ModalDelete>
