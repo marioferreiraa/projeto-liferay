@@ -2,11 +2,12 @@ import './App.css';
 import CardGit from './components/CardGit';
 import NavBar from './components/NavBar';
 import Mock from './MockTemporario';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import React  from 'react';
 import ModalDelete from './components/ModalDelete';
 import EmptyPage from './components/DefaultPage';
 import ListGit from './components/ListGit';
+import Service from './service/Service'
 
 let { stargazers_count: stars,
 	forks_count: forks,
@@ -47,56 +48,86 @@ const getTimeByUpdatedAt = (updatedAt) => {
 const App = () => {
 
 	const [repositories, setRepositories] = useState([]);
+	const [onRequestError, setOnRequestError] = useState(false);
+	const [onRequestWarning, setOnRequestWarning] = useState(false);
+	const [githubNameList, setGithubNameList] = useState([]);
+
+	const addCardInDashbord = () => {
+		
+		let repositoryName = document.getElementById("basicInputText").value;
+		
+		if(githubNameList.length && githubNameList.indexOf(repositoryName) != -1){
+			setOnRequestWarning(true);
+			return;
+		}
+
+		Service.addRepositoryByName(repositoryName)
+		.then((response) => {
+			console.log("then")
+            console.log(response)
+			setOnRequestError(false);
+			setOnRequestWarning(false);
+
+			setGithubNameList([...githubNameList, response.data.full_name]);
+
+			let githubCard = { 
+				stars: response.data.stargazers_count,
+				forks: response.data.forks_count,
+				openIssues: response.data.open_issues_count,
+				age: getYearsByCreatedAt(response.data.created_at),
+				lastCommit: getTimeByUpdatedAt(response.data.updated_at),
+				license: response.data.license.url || "N/A",
+				language:response.data.language,
+				name: response.data.full_name,
+				logo: response.data.owner.avatar_url,
+				id: response.data.id
+			}
+
+			setRepositories([...repositories, githubCard]);
+			console.log("repositories");
+			console.log(repositories);
+
+        })
+		.catch((error) => {
+            console.log({error: true});
+			console.log(error)
+			setOnRequestError(true);
+        });
+		
+	}
 
 	return (
 		<div className="App">
-			<NavBar />
+			<NavBar callbackAdd={addCardInDashbord} 
+				onRequestError={onRequestError} 
+				onRequestWarning={onRequestWarning}
+				setOnRequestError={setOnRequestError}
+				setOnRequestWarning={setOnRequestWarning}/>
 			{!!repositories.length ? 
 				<div className="container mt-5">
 					<div className="row">
-						<div className="col-md-4">
-							<CardGit language={language}
-								logo={logo}
-								name={name}
-								age={getYearsByCreatedAt(createdDate)}
-								openIssues={openIssues}
-								forks={forks}
-								stars={stars}
-								license={license.url}
-								lastCommit={getTimeByUpdatedAt(updatedDate)}
-								></CardGit>
-						</div>
-						<div className="col-md-4">
-							<CardGit language={language}
-								logo={logo}
-								name={name}
-								age={getYearsByCreatedAt(createdDate)}
-								openIssues={openIssues}
-								forks={forks}
-								stars={stars}
-								license={license.url}
-								lastCommit={getTimeByUpdatedAt(updatedDate)}
-								></CardGit>
-						</div>
-						<div className="col-md-4">
-							<CardGit language={language}
-								logo={logo}
-								name={name}
-								age={getYearsByCreatedAt(createdDate)}
-								openIssues={openIssues}
-								forks={forks}
-								stars={stars}
-								license={license.url}
-								lastCommit={getTimeByUpdatedAt(updatedDate)}
-								></CardGit>
-						</div>
+						{!!repositories.length && repositories.map((item) => (
+							<div className="col-md-4" key={item.id}>
+								<CardGit language={item.language}
+									logo={item.logo}
+									name={item.name}
+									age={item.age}
+									openIssues={item.openIssues}
+									forks={item.forks}
+									stars={item.stars}
+									license={item.license.url}
+									lastCommit={item.lastCommit}
+									></CardGit>
+							</div>
+						))}
 					</div>
 				</div>
 			: 
 				<EmptyPage
 					Title={"There is still nothing here"}
 					Description={"Add some repositories by clicking add new repository"}
-					buttonName={false}
+					buttonName={""}
+					showButton={false}
 					callbackButton={() => alert("teste")}
 				></EmptyPage>	
 			}

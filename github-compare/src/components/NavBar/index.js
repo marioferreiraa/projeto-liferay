@@ -15,7 +15,7 @@ import DropdownAdd from '../Dropdowns/DropdownAdd';
 import DropdownToggleLayout from '../Dropdowns/DropdownToggleLayout';
 
 
-const NavBar = () => { 
+const NavBar = (props) => {
     
     return(
 
@@ -51,7 +51,11 @@ const NavBar = () => {
                         <DropdownToggleLayout></DropdownToggleLayout>
                     </li>
                     <li className="nav-item">
-                        <DropdownAdd/>
+                        <DropdownAdd onRequestError={props.onRequestError}
+                            onRequestWarning={props.onRequestWarning}
+                            setOnRequestWarning={props.setOnRequestWarning}
+                            setOnRequestError={props.setOnRequestError}
+                            callbackAdd={props.callbackAdd}/>
                     </li>
                 </ul>
             </ClayNav>
