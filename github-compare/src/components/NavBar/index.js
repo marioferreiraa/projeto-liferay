@@ -18,13 +18,27 @@ import DropdownToggleLayout from '../Dropdowns/DropdownToggleLayout';
 const NavBar = (props) => {
 
     const [inputFilter, setInputFilter] = useState("");
+    const [filterFavoriteRepositories, setFilterFavoriteRepositories] = useState(false)
 
     const handleFilterChange = (event) => {
         props.setFilterWithSearch(event.target.value)
         setInputFilter(event.target.value);
     }
-    
-    return(
+
+    const handleFilterFavorite = () => {
+        setFilterFavoriteRepositories(!filterFavoriteRepositories);
+        if (!filterFavoriteRepositories) {
+            document.querySelectorAll('.card-header .lexicon-icon-star-o').forEach((item)=>{
+                console.log(item.closest('.col-md-4').classList.add("hide"))
+            })
+        }else{
+            document.querySelectorAll('.card-header .lexicon-icon-star-o').forEach((item)=>{
+                console.log(item.closest('.col-md-4').classList.remove("hide"))
+            })
+        }
+    }
+
+    return (
 
         <div className="container">
             <ClayNav>
@@ -42,14 +56,14 @@ const NavBar = (props) => {
                     </li>
                 </ul>
                 <div className="navbar-form d-flex col-md-6">
-                    <form className="d-flex align-items-center"> 
-                        <ClayInput placeholder="Search" type="text" id="search" value={inputFilter} onChange={handleFilterChange} />    
+                    <form className="d-flex align-items-center">
+                        <ClayInput placeholder="Search" type="text" id="search" value={inputFilter} onChange={handleFilterChange} />
                         <ClayIcon className="search-icon" spritemap={spritemap} symbol="search" />
                     </form>
                 </div>
                 <ul className="navbar-nav d-flex justify-content-between col-md-2">
                     <li className="nav-item">
-                        <ClayButtonWithIcon className="border-0" displayType="secondary" spritemap={spritemap} symbol="star-o" />
+                        <ClayButtonWithIcon onClick={handleFilterFavorite} className="border-0" displayType="secondary" spritemap={spritemap} symbol={!filterFavoriteRepositories ? "star-o" : "star"} />
                     </li>
                     <li className="nav-item">
                         <ClayButtonWithIcon className="border-0" displayType="secondary" spritemap={spritemap} symbol="adjust" />
@@ -62,7 +76,7 @@ const NavBar = (props) => {
                             onRequestWarning={props.onRequestWarning}
                             setOnRequestWarning={props.setOnRequestWarning}
                             setOnRequestError={props.setOnRequestError}
-                            callbackAdd={props.callbackAdd}/>
+                            callbackAdd={props.callbackAdd} />
                     </li>
                 </ul>
             </ClayNav>

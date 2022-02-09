@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import spritemap from '../../images/icons.svg';
 import ClayIcon from '@clayui/icon';
 import ModalDelete from '../ModalDelete';
+import { useState } from 'react';
 
 const StyledLogo = styled.img`
     width: 40px;
@@ -47,6 +48,9 @@ const StyledLanguage = styled.div`
 `
 
 const CardGit = (props) => {
+
+    const [favorite, setFavorite] = useState(false);
+
     return (
         <div className="card">
             <StyledHeadDiv className="card-header d-flex justify-content-between align-items-center">
@@ -55,8 +59,8 @@ const CardGit = (props) => {
                     <span>{props.name}</span>
                 </div>
                 <div className="d-flex">
-                    <StyledHeadButton>
-                        <ClayIcon className="search-icon" spritemap={spritemap} symbol="star" />
+                    <StyledHeadButton onClick={() => setFavorite(!favorite)}>
+                        <ClayIcon className="search-icon" spritemap={spritemap} symbol={!favorite ? "star-o" : "star"} />
                     </StyledHeadButton>
                     <ModalDelete deleteCardFromDashboard={props.deleteCardFromDashboard} deleteCardName={props.name}></ModalDelete>
                 </div>

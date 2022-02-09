@@ -92,6 +92,7 @@ const App = () => {
 	}
 
 	const deleteCardFromDashboard = (name) => {
+		console.log(`Deletar - ${name}`)
 		setGithubNameList(githubNameList.filter(item => item !== name));
 		setRepositories(repositories.filter(item => item.name !== name));
 	}
@@ -108,10 +109,6 @@ const App = () => {
 		console.log("New ====================")
 		console.log(newArray)
 		setRepositories(newArray);
-	}
-
-	const filterArray = () => {
-		let searchString = document.getElementById("search").value
 	}
 
 	useEffect(()=>{

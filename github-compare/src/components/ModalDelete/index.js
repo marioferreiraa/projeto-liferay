@@ -23,7 +23,6 @@ const StyledHeadButton = styled.button`
 	const { observer, onClose } = useModal({
 		onClose: () => setVisible(false)
 	});
-	
 
 	const deleteClick = () => {
 		props.deleteCardFromDashboard(props.deleteCardName);

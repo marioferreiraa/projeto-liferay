@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import spritemap from '../../images/icons.svg';
 import ClayIcon from '@clayui/icon';
+import ModalDelete from '../ModalDelete';
 
 const StyledLogo = styled.img`
     width: 40px;
@@ -75,11 +76,9 @@ const ListGit = (props) => {
                 </div>
                 <div className="col-md-1">
                     <StyledHeadButton>
-                        <ClayIcon className="search-icon" spritemap={spritemap} symbol="star" />
+                        <ClayIcon className="search-icon" spritemap={spritemap} symbol="star-o" />
                     </StyledHeadButton>
-                    <StyledHeadButton>
-                        <ClayIcon className="search-icon" spritemap={spritemap} symbol="trash" />
-                    </StyledHeadButton>
+                    <ModalDelete deleteCardFromDashboard={props.deleteCardFromDashboard} deleteCardName={props.name}></ModalDelete>
                 </div>
             </StyledShaddowList>
     );
