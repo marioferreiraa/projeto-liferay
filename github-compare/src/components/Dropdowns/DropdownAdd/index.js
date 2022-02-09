@@ -25,10 +25,6 @@ const DropdownAdd = (props) => {
         setInputAddValue("");
     }
 
-    useEffect(() => {
-        console.log(inputAddValue)
-    }, [inputAddValue])
-
     return(
         <ClayDropDown
             trigger={
@@ -53,9 +49,9 @@ const DropdownAdd = (props) => {
 				<ClayDropDown.Group>
 					<h3>New repository</h3>
                     <ClayForm.Group className={`mt-3 ${props.onRequestError && 'has-error'} ${(props.onRequestWarning && !props.onRequestError) && 'has-warning'}`}>
-                        <label htmlFor="basicInputText">Repository *</label>
+                        <label htmlFor="inputAdd">Repository *</label>
                         <ClayInput
-                        id="basicInputText"
+                        id="inputAdd"
                         placeholder=""
                         type="text"
                         value={inputAddValue}

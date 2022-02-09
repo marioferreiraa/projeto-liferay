@@ -1,7 +1,7 @@
-import ClayButtonWithIcon from '@clayui/button';
 import styled from 'styled-components';
 import spritemap from '../../images/icons.svg';
 import ClayIcon from '@clayui/icon';
+import ModalDelete from '../ModalDelete';
 
 const StyledLogo = styled.img`
     width: 40px;
@@ -58,9 +58,7 @@ const CardGit = (props) => {
                     <StyledHeadButton>
                         <ClayIcon className="search-icon" spritemap={spritemap} symbol="star" />
                     </StyledHeadButton>
-                    <StyledHeadButton>
-                        <ClayIcon className="search-icon" spritemap={spritemap} symbol="trash" />
-                    </StyledHeadButton>
+                    <ModalDelete deleteCardFromDashboard={props.deleteCardFromDashboard} deleteCardName={props.name}></ModalDelete>
                 </div>
             </StyledHeadDiv>
             <div className="card-body">

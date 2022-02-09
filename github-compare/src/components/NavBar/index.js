@@ -5,7 +5,7 @@ import ClayIcon from '@clayui/icon';
 
 import "@clayui/css/lib/css/atlas.css";
 import './style.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 
 import logo from '../../images/logo_github.svg';
@@ -16,6 +16,13 @@ import DropdownToggleLayout from '../Dropdowns/DropdownToggleLayout';
 
 
 const NavBar = (props) => {
+
+    const [inputFilter, setInputFilter] = useState("");
+
+    const handleFilterChange = (event) => {
+        props.setFilterWithSearch(event.target.value)
+        setInputFilter(event.target.value);
+    }
     
     return(
 
@@ -31,12 +38,12 @@ const NavBar = (props) => {
                         </span>
                     </li>
                     <li className="nav-item">
-                        <FiltersAndOrder />
+                        <FiltersAndOrder orderArray={props.orderArray} />
                     </li>
                 </ul>
                 <div className="navbar-form d-flex col-md-6">
                     <form className="d-flex align-items-center"> 
-                        <ClayInput placeholder="Search" type="text" />    
+                        <ClayInput placeholder="Search" type="text" id="search" value={inputFilter} onChange={handleFilterChange} />    
                         <ClayIcon className="search-icon" spritemap={spritemap} symbol="search" />
                     </form>
                 </div>

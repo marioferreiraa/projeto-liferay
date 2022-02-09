@@ -9,17 +9,6 @@ import EmptyPage from './components/DefaultPage';
 import ListGit from './components/ListGit';
 import Service from './service/Service'
 
-let { stargazers_count: stars,
-	forks_count: forks,
-	open_issues_count: openIssues,
-	created_at: createdDate,
-	updated_at: updatedDate,
-	license,
-	language,
-	full_name: name} = Mock;
-
-let logo = Mock.owner.avatar_url;
-
 const getYearsByCreatedAt = (createdAt) => {
 	return new Date().getFullYear() - new Date(createdAt).getFullYear();
 }
@@ -48,13 +37,16 @@ const getTimeByUpdatedAt = (updatedAt) => {
 const App = () => {
 
 	const [repositories, setRepositories] = useState([]);
+	const [repositoriesAux, setRepositoriesAux] = useState([]);
 	const [onRequestError, setOnRequestError] = useState(false);
 	const [onRequestWarning, setOnRequestWarning] = useState(false);
 	const [githubNameList, setGithubNameList] = useState([]);
+	const [tagOrder, setTagOrder] = useState("");
+	const [filterWithSearch, setFilterWithSearch] = useState("");
 
-	const addCardInDashbord = () => {
+	const addCardInDashboard = () => {
 		
-		let repositoryName = document.getElementById("basicInputText").value;
+		let repositoryName = document.getElementById("inputAdd").value;
 		
 		if(githubNameList.length && githubNameList.indexOf(repositoryName) != -1){
 			setOnRequestWarning(true);
@@ -80,12 +72,15 @@ const App = () => {
 				language:response.data.language,
 				name: response.data.full_name,
 				logo: response.data.owner.avatar_url,
-				id: response.data.id
+				id: response.data.id,
+				lastCommitDate: response.data.updated_at
 			}
 
 			setRepositories([...repositories, githubCard]);
+			setRepositoriesAux([...repositoriesAux, githubCard]);
 			console.log("repositories");
 			console.log(repositories);
+			document.getElementById("inputAdd").value = "";
 
         })
 		.catch((error) => {
@@ -96,13 +91,51 @@ const App = () => {
 		
 	}
 
+	const deleteCardFromDashboard = (name) => {
+		setGithubNameList(githubNameList.filter(item => item !== name));
+		setRepositories(repositories.filter(item => item.name !== name));
+	}
+
+	const orderArray = (tag) => {
+		console.log(`tentando ordenar por ${tag}`);
+		console.log("Old ====================")
+		console.log(repositories)
+		var newArray = repositories.sort((a,b) => {
+			//return (a[`${tag}`] > b[`${tag}`]) ? 1 : ((b[`${tag}`] > a[`${tag}`]) ? -1 : 0)
+			return b[`${tag}`] - a[`${tag}`]
+		});
+		
+		console.log("New ====================")
+		console.log(newArray)
+		setRepositories(newArray);
+	}
+
+	const filterArray = () => {
+		let searchString = document.getElementById("search").value
+	}
+
+	useEffect(()=>{
+		console.log(tagOrder);
+		(tagOrder!="" ? orderArray(tagOrder) : console.log("tentou atualizar nada"))
+	},[tagOrder])
+
+	useEffect(()=>{
+		if(filterWithSearch != ""){
+			setRepositories(repositoriesAux.filter(item => item.name.indexOf(filterWithSearch) != -1))
+		}else{
+			setRepositories(repositoriesAux);
+		}
+	},[filterWithSearch])
+
 	return (
 		<div className="App">
-			<NavBar callbackAdd={addCardInDashbord} 
+			<NavBar callbackAdd={addCardInDashboard} 
 				onRequestError={onRequestError} 
 				onRequestWarning={onRequestWarning}
 				setOnRequestError={setOnRequestError}
-				setOnRequestWarning={setOnRequestWarning}/>
+				setOnRequestWarning={setOnRequestWarning}
+				orderArray={setTagOrder}
+				setFilterWithSearch={setFilterWithSearch}/>
 			{!!repositories.length ? 
 				<div className="container mt-5">
 					<div className="row">
@@ -117,6 +150,7 @@ const App = () => {
 									stars={item.stars}
 									license={item.license.url}
 									lastCommit={item.lastCommit}
+									deleteCardFromDashboard={deleteCardFromDashboard}
 									></CardGit>
 							</div>
 						))}
@@ -131,7 +165,6 @@ const App = () => {
 					callbackButton={() => alert("teste")}
 				></EmptyPage>	
 			}
-			<ModalDelete></ModalDelete>
 		</div>
 	);
 }

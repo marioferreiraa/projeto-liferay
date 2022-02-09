@@ -1,14 +1,23 @@
 import ClayDropDown from '@clayui/drop-down'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import spritemap from '../../../images/icons.svg';
 
 import './style.css'
 
-const FiltersAndOrder = () => {
+const FiltersAndOrder = (props) => {
 
     const [active, setActive] = useState(false);
+	const [orderBy, setOrderBy] = useState("");
+	
+	const order = (string) => {
+		props.orderArray(string)
+	}
+
+	useEffect(()=>{
+		order(orderBy);
+	},[orderBy])
 
     return (
 		<ClayDropDown
@@ -32,15 +41,21 @@ const FiltersAndOrder = () => {
 		>
 			<ClayDropDown.ItemList>
 				<ClayDropDown.Group>
-					{[
-						{href: '#one', label: 'one'},
-						{href: '#two', label: 'two'},
-						{href: '#three', label: 'three'},
-					].map((item, i) => (
-						<ClayDropDown.Item href={item.href} key={i}>
-							{item.label}
-						</ClayDropDown.Item>
-					))}
+					<ClayDropDown.Item href={"#stars"} key={"stars"} onClick={()=>setOrderBy("stars")}>
+						{"Stars"}
+					</ClayDropDown.Item>
+					<ClayDropDown.Item href={"#forks"} key={"forks"} onClick={()=>setOrderBy("forks")}>
+						{"Forks"}
+					</ClayDropDown.Item>
+					<ClayDropDown.Item href={"#open-issues"} key={"open issues"} onClick={()=>setOrderBy("openIssues")}>
+						{"Open Issues"}
+					</ClayDropDown.Item>
+					<ClayDropDown.Item href={"#age"} key={"age"} onClick={()=>setOrderBy("age")}>
+						{"Age"}
+					</ClayDropDown.Item>
+					<ClayDropDown.Item href={"#last-commit"} key={"last-commit"} onClick={()=>setOrderBy("lastCommitDate")}>
+						{"Last commit"}
+					</ClayDropDown.Item>
 				</ClayDropDown.Group>
 			</ClayDropDown.ItemList>
 		</ClayDropDown>
